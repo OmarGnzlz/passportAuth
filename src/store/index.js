@@ -11,9 +11,9 @@ const connect = async (url) => {
         useUnifiedTopology: true,
         useFindAndModify: false
         })
-        console.lg("DB successfully connected")
+        console.log("DB successfully connected")
     }catch (error){
-        console.log(erro)
+        console.log(error)
     }
 }
 
