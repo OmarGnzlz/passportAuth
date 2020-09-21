@@ -4,7 +4,6 @@ const boom = require('@hapi/boom')
 const config = require('../config/index')
 
 const Model = require('../store/models/user')
-const { config } = require('dotenv/types')
 
 passport.use(
     new Strategy(
