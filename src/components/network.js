@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const response = require('../network/response')
 const controller = require('./controller')
+const config = require('../config/index')
 
 const boom = require('@hapi/boom')
 const jwt = require('jsonwebtoken')
@@ -55,7 +56,7 @@ router.post('/login',  (req, res, next) => {
                 email,
             }
             
-            const token = jwt.sign(payload, "secret");
+            const token = jwt.sign(payload, config.jwt_secret);
             
             return  res.status(201).json({ token, user })
             
