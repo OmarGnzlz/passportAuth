@@ -9,7 +9,14 @@
   "author": "Omar Gonzalez",
   "license": "MIT",
   "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "bcrypt": "^5.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.5"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.5",
+    "passport": "^0.4.1",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }

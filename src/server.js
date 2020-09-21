@@ -1,3 +1,4 @@
+const passport = require('passport')
 const express = require('express')
 const app = express()
 const router = require('./api/routes')
@@ -9,6 +10,7 @@ DB('mongodb+srv://omargnzlz645:resina96@cluster0.biyni.mongodb.net/social_job?re
 //confing
 app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
+app.use(passport.initialize())
 
 //routes
 router(app)
