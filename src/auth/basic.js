@@ -12,13 +12,15 @@ passport.use(
         try{
             const user = await Model.find({email: email})
 
+            
             if(!user){
                 return cb(boom.unauthorized(), false)
             }
-
+            
             if(!(await bcryp.compare(password, user[0].password))){
                 return cb(boom.unauthorized(), false)
             }
+            
 
             delete user.password
 

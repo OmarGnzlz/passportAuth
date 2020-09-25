@@ -34,12 +34,14 @@ const updateUser = async (id, name, username, email, password) => {
         if(!id || !name || !username || !email || !password){
             throw new Error("Missing Data")
         }
-
+    
+    const hashedPassword = await bcrypt.hash(password, 8)
+    
     const user = {
         name,
         username,
         email, 
-        password
+        password: hashedPassword
     }
         const updatedUser = await store.update(id, user)
         

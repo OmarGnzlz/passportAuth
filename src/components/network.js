@@ -3,12 +3,25 @@ const router = express.Router()
 const response = require('../network/response')
 const controller = require('./controller')
 const config = require('../config/index')
+const Model = require('../store/models/user')
 
 const boom = require('@hapi/boom')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
 require('../auth/jtw')
+
+
+/*             
+passport.serializeUser((user, done) => {
+    done(null,user[0].email )
+})
+
+passport.deserializeUser((email, done) => {
+    Model.find({ email },(error, user) => {
+        done(error, user)
+    })
+}) */
 
 
 router.get('/', async (req, res) => {
@@ -47,18 +60,27 @@ router.post('/login',  (req, res, next) => {
                     next(error)
                 }
             })
-            
-            const { _id: id, name, email } = user;
-            
+
+            const { _id: id, name, email } = user[0];
+                        
             const payload = {
                 sub: id,
                 name,
-                email,
+                email
             }
             
-            const token = jwt.sign(payload, config.jwt_secret);
             
-            return  res.status(201).json({ token, user })
+            const token = jwt.sign(payload, config.jwt_secret,{
+                expiresIn: '15m'
+            });
+
+           /*  res.cookie('token', token, {
+                httpOnly: 'dev',
+                secure: "supersecretkey"
+
+            }) */
+            
+            return  res.status(201).json({ token, "System message":"user succesfully logged in" })
             
         } catch (error) {
             next(error)
