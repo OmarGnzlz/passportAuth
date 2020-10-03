@@ -1,7 +1,7 @@
 const passport = require('passport')
 const express = require('express')
 const session = require('express-session')
-const cookieParser = require('cookie-parser')
+const cookieParse = require('cookie-parser')
 
 const app = express()
 const router = require('./api/routes')
@@ -17,10 +17,13 @@ DB(config.db_uri)
 //confing
 app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
-// app.use(cookieParser)
-// app.use(session({ resave: false, saveUninitialized:false, secret: "supersecretkey"}))
-// app.use(passport.initialize())
-// app.use(passport.session())
+
+
+app.use(cookieParse())
+app.use(session({ secret: "superSecret", resave: false, saveUninitialized: true}))
+
+app.use(passport.initialize()) 
+app.use(passport.session()) 
 
 //routes
 router(app)

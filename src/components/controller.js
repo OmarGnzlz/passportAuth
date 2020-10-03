@@ -46,9 +46,10 @@ const updateUser = async (id, name, username, email, password) => {
         const updatedUser = await store.update(id, user)
         
         const finalResponse = {
-            updatedUser,
+            user,
             "System Message":"User successfully updated"
         }
+
         return finalResponse
     } catch (error) {
         throw new Error(error)

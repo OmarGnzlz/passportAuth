@@ -5,11 +5,21 @@ const config = require('../config/index')
 
 const Model = require('../store/models/user')
 
+const cookieExtractor = function(req) {
+    let token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies.token;
+    }
+    console.log(token)
+    return token;
+};
+
 passport.use(
     new Strategy(
         {
             secretOrKey : config.jwt_secret,
-            jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken()
+            jwtFromRequest : cookieExtractor
             
         },
 

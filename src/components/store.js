@@ -27,8 +27,8 @@ const update = async(id, user) => {
 
     retrivedUser = Object.fromEntries(entrie)
 
-    const updateUser = await Model.findByIdAndUpdate(id, retrivedUser)
-    return updateUser
+    const updatedUser = await Model.findByIdAndUpdate(id, retrivedUser)
+    return updatedUser
 }
 
 const remove = async(id) => {

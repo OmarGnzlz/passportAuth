@@ -74,11 +74,11 @@ router.post('/login',  (req, res, next) => {
                 expiresIn: '15m'
             });
 
-           /*  res.cookie('token', token, {
-                httpOnly: 'dev',
-                secure: "supersecretkey"
+            res.cookie('token', token, {
+                httpOnly: false,
+                secure: false
 
-            }) */
+            }) 
             
             return  res.status(201).json({ token, "System message":"user succesfully logged in" })
             
@@ -93,6 +93,7 @@ router.put('/:id' , passport.authenticate('jwt', { session: false }) ,async (req
         const { name, username, email, password } = req.body
 
         const user = await controller.updateUser(req.params.id, name, username, email, password)
+        console.log(req.cookies.token)
         response.success(req, res, user, 201)
     } catch (error) {
         response.error(req, res, error.message, 400, error)
@@ -110,6 +111,12 @@ router.delete('/:id', async(req, res) => {
     } catch (error) {
         response.error(req, res, error.message, 400, error)
     }
+})
+
+router.get('/logout', (req, res) => {
+   req.session = null
+   req.logout()
+   res.status(201)
 })
 
 module.exports = router
