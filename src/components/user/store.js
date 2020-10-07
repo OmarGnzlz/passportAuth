@@ -1,4 +1,4 @@
-const Model = require('../store/models/user')
+const Model = require('../../store/models/user')
 
 //let dummyDB = [ 1, 2, 3]
 

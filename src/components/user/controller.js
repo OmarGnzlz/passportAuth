@@ -2,8 +2,6 @@ const store = require('./store')
 const bcrypt = require('bcrypt')
 
 
-require('../auth/basic')
-
 const getUser = async () => {
     let result = await store.getall()
     return result
@@ -55,6 +53,7 @@ const updateUser = async (id, name, username, email, password) => {
         throw new Error(error)
     }
 }
+
 
 const deleteUser = async (id) => {
     try {

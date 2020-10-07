@@ -16,6 +16,7 @@ DB(config.db_uri)
 
 //confing
 app.use(express.json())
+app.set('trust proxy', 1)
 app.use(express.urlencoded( { extended: true }))
 
 

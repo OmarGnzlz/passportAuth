@@ -1,30 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const response = require('../network/response')
+const response = require('../../network/response')
 const controller = require('./controller')
-const config = require('../config/index')
-const Model = require('../store/models/user')
+const config = require('../../config/index')
+const Model = require('../../store/models/user')
 
 const boom = require('@hapi/boom')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
-require('../auth/jtw')
+require('../../auth/jtw')
+require('../../auth/basic')
 
 
-/*             
-passport.serializeUser((user, done) => {
-    done(null,user[0].email )
-})
-
-passport.deserializeUser((email, done) => {
-    Model.find({ email },(error, user) => {
-        done(error, user)
-    })
-}) */
-
-
-router.get('/', async (req, res) => {
+router.get('/get', async (req, res) => {
     try{
         const result = await controller.getUser()
         response.success(req, res, result, 201)
@@ -44,7 +33,6 @@ router.post('/sign-in', async (req, res) => {
     }
 })
 
-require('../auth/basic')
 router.post('/login',  (req, res, next) => {
     //const { email, password } = req.body
     
@@ -75,7 +63,7 @@ router.post('/login',  (req, res, next) => {
             });
 
             res.cookie('token', token, {
-                httpOnly: false,
+                httpOnly: true,
                 secure: false
 
             }) 
@@ -113,10 +101,17 @@ router.delete('/:id', async(req, res) => {
     }
 })
 
+
 router.get('/logout', (req, res) => {
-   req.session = null
-   req.logout()
-   res.status(201)
+    req.session.destroy((err) => {
+        if(err) {
+            return next(err);
+        } 
+        req.session = null;
+        console.log("logout successful")
+        return res.redirect('http://localhost:3000/user/get')
+    
+    })
 })
 
 module.exports = router
